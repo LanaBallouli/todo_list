@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                         builder: (context) => AddEditTaskPage(task: task),
                       ),
                     );
-                    _refreshTasks(context);
+                    context.read<TaskBloc>().add(GetAllTasksEvent());
                   },
                   onDelete: () {
                     context.read<TaskBloc>().add(DeleteTaskEvent(id: task.id!));
@@ -67,13 +67,14 @@ class HomePage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => _refreshTasks(context),
+                    onPressed: () => context.read<TaskBloc>().add(GetAllTasksEvent()),
                     child: const Text('Retry'),
                   ),
                 ],
               ),
             );
           }
+          print('Unexpected state: $state');
           return const Center(child: Text('Something went wrong'));
         },
       ),
@@ -86,15 +87,12 @@ class HomePage extends StatelessWidget {
               builder: (context) => const AddEditTaskPage(),
             ),
           );
-          _refreshTasks(context);
+          // Refresh tasks after adding a new task
+          context.read<TaskBloc>().add(GetAllTasksEvent());
         },
-        child: const Icon(Icons.add, color: Colors.white,),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
-  }
-
-  void _refreshTasks(BuildContext context) {
-    context.read<TaskBloc>().add(GetAllTasksEvent());
   }
 
   Widget _buildEmptyState() {

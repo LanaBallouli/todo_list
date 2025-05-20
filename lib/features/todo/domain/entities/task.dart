@@ -11,7 +11,6 @@ class Task {
     this.isCompleted = false,
   });
 
-  // Instead of using equatable, implement equality manually
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

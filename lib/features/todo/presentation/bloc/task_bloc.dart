@@ -137,28 +137,40 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   }
 
   Future<void> _onUpdateTask(
-    UpdateTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
+      UpdateTaskEvent event,
+      Emitter<TaskState> emit,
+      ) async {
     emit(TaskLoading());
     try {
       final rowsAffected = await _updateTask(event.task);
-      emit(TaskUpdated(rowsAffected: rowsAffected));
+      if (rowsAffected > 0) {
+        final tasks = await _getAllTasks();
+        emit(TasksLoaded(tasks: tasks));
+      } else {
+        emit(TaskError(message: 'Failed to update task'));
+      }
     } catch (e) {
       emit(TaskError(message: e.toString()));
     }
   }
 
   Future<void> _onDeleteTask(
-    DeleteTaskEvent event,
-    Emitter<TaskState> emit,
-  ) async {
+      DeleteTaskEvent event,
+      Emitter<TaskState> emit,
+      ) async {
     emit(TaskLoading());
     try {
       final rowsAffected = await _deleteTask(event.id);
-      emit(TaskDeleted(rowsAffected: rowsAffected));
+      if (rowsAffected > 0) {
+        final tasks = await _getAllTasks();
+        emit(TasksLoaded(tasks: tasks));
+      } else {
+        emit(TaskError(message: 'Failed to delete task'));
+      }
     } catch (e) {
       emit(TaskError(message: e.toString()));
     }
   }
+
+
 }
