@@ -37,31 +37,4 @@ This is a **To-Do List Application** built using **Flutter** 🚀, **Bloc** for 
 
 ---
 
-## Installation 🛠️
-
-### Prerequisites
-
-1. **Flutter SDK**: Ensure you have Flutter installed on your machine. You can download it from [here](https://flutter.dev/docs/get-started/install) 🌐.
-2. **Dart**: Flutter comes bundled with Dart, so no additional installation is required 🎯.
-3. **Android Studio / Xcode**: For running the app on Android/iOS emulators or physical devices 📲.
-
----
-
-## Future Enhancements 🌟
-
-- **Notifications** ⏰: Implement reminders for tasks with deadlines.
-- **Dark Mode** 🌑: Add a dark mode theme for better user experience.
-- **Search and Filter** 🔍: Allow users to search for specific tasks or filter by completion status.
-
----
-
-## Contact 📧
-
-For questions or feedback, please contact:
-
-- Email: lanaballouli@gmail.com 📩
-- GitHub: Lana Ballouli (https://github.com/lanaballouli) 👨‍💻
-
----
-
 Thank you for using the To-Do List App! 🚀✨
