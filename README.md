@@ -25,7 +25,7 @@ This is a **To-Do List Application** built using **Flutter** 🚀, **Bloc** for 
     - All tasks are stored in the device's local database using SQflite, ensuring data persistence.
 
 6. **State Management** 🧠:
-    - Built using the **Cubit/Bloc** architecture for efficient state management.
+    - Built using the **Bloc** architecture for efficient state management.
 
 ---
 
