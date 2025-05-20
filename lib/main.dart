@@ -3,11 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/todo/presentation/bloc/task_bloc.dart';
 import 'features/todo/presentation/pages/home_page.dart';
-import 'injection_container.dart' as di;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
+void main() {
   runApp(const MyApp());
 }
 
@@ -19,10 +16,11 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => di.sl<TaskBloc>(),
+          create: (context) => TaskBloc(),
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Todo List App',
         theme: ThemeData(
           primarySwatch: Colors.blue,

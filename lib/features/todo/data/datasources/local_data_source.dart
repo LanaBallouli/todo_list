@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
 class DatabaseHelper {
@@ -19,8 +18,9 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, 'todo_list.db');
+    // Instead of using path_provider, use the getDatabasesPath from sqflite
+    String databasesPath = await getDatabasesPath();
+    String path = join(databasesPath, 'todo_list.db');
     return await openDatabase(
       path,
       version: 1,

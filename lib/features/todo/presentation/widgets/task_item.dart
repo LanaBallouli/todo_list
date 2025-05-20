@@ -4,7 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../domain/entities/task.dart';
 
 class TaskItem extends StatelessWidget {
-  final Tasks task;
+  final Task task;
   final VoidCallback onToggleComplete;
   final VoidCallback onEdit;
   final VoidCallback onDelete;

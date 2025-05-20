@@ -4,41 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/task.dart';
 import '../bloc/task_bloc.dart';
 
-class AddEditTaskPage extends StatefulWidget {
-  final Tasks? task;
+class AddEditTaskPage extends StatelessWidget {
+  final Task? task;
 
   const AddEditTaskPage({Key? key, this.task}) : super(key: key);
 
   @override
-  State<AddEditTaskPage> createState() => _AddEditTaskPageState();
-}
-
-class _AddEditTaskPageState extends State<AddEditTaskPage> {
-  final _formKey = GlobalKey<FormState>();
-  late TextEditingController _titleController;
-  late TextEditingController _descriptionController;
-  bool _isCompleted = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _titleController = TextEditingController(text: widget.task?.title ?? '');
-    _descriptionController = TextEditingController(text: widget.task?.description ?? '');
-    _isCompleted = widget.task?.isCompleted ?? false;
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final titleController = TextEditingController(text: task?.title ?? '');
+    final descriptionController = TextEditingController(text: task?.description ?? '');
+    bool isCompleted = task?.isCompleted ?? false;
+
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.task == null ? 'Add Task' : 'Edit Task'),
+        backgroundColor: Colors.white,
+        title: Text(task == null ? 'Add Task' : 'Edit Task'),
         elevation: 0,
       ),
       body: BlocListener<TaskBloc, TaskState>(
@@ -57,12 +39,12 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
-            key: _formKey,
+            key: GlobalKey<FormState>(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
-                  controller: _titleController,
+                  controller: titleController,
                   decoration: const InputDecoration(
                     labelText: 'Title',
                     border: OutlineInputBorder(),
@@ -76,7 +58,7 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  controller: _descriptionController,
+                  controller: descriptionController,
                   decoration: const InputDecoration(
                     labelText: 'Description (optional)',
                     border: OutlineInputBorder(),
@@ -84,15 +66,13 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                   maxLines: 3,
                 ),
                 const SizedBox(height: 16),
-                if (widget.task != null) ...[
+                if (task != null) ...[
                   Row(
                     children: [
                       Checkbox(
-                        value: _isCompleted,
+                        value: isCompleted,
                         onChanged: (value) {
-                          setState(() {
-                            _isCompleted = value ?? false;
-                          });
+                          isCompleted = value ?? false;
                         },
                       ),
                       const Text('Mark as completed'),
@@ -105,22 +85,23 @@ class _AddEditTaskPageState extends State<AddEditTaskPage> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        final task = Tasks(
-                          id: widget.task?.id,
-                          title: _titleController.text,
-                          description: _descriptionController.text,
-                          isCompleted: _isCompleted,
+                      final formKey = GlobalKey<FormState>();
+                      if (formKey.currentState?.validate() ?? false) {
+                        final newTask = Task(
+                          id: task?.id,
+                          title: titleController.text,
+                          description: descriptionController.text,
+                          isCompleted: isCompleted,
                         );
 
-                        if (widget.task == null) {
-                          context.read<TaskBloc>().add(AddTaskEvent(task: task));
+                        if (task == null) {
+                          context.read<TaskBloc>().add(AddTaskEvent(task: newTask));
                         } else {
-                          context.read<TaskBloc>().add(UpdateTaskEvent(task: task));
+                          context.read<TaskBloc>().add(UpdateTaskEvent(task: newTask));
                         }
                       }
                     },
-                    child: Text(widget.task == null ? 'Add Task' : 'Update Task'),
+                    child: Text(task == null ? 'Add Task' : 'Update Task'),
                   ),
                 ),
               ],

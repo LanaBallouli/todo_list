@@ -1,6 +1,6 @@
 import '../../domain/entities/task.dart';
 
-class TaskModel extends Tasks {
+class TaskModel extends Task {
   const TaskModel({
     int? id,
     required String title,
@@ -31,7 +31,7 @@ class TaskModel extends Tasks {
     };
   }
 
-  factory TaskModel.fromEntity(Tasks task) {
+  factory TaskModel.fromEntity(Task task) {
     return TaskModel(
       id: task.id,
       title: task.title,
