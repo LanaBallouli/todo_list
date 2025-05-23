@@ -34,6 +34,7 @@ This is a **To-Do List Application** built using **Flutter** 🚀, **Bloc** for 
 - **Flutter**: Cross-platform framework for building the UI 🚀.
 - **Bloc**: State management library for handling app logic and state transitions 💡.
 - **SQflite**: Lightweight SQLite database plugin for storing tasks locally 💾.
+- **Clean Architecture**
 
 ---
 
